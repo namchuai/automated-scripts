@@ -1,4 +1,6 @@
 #!/bin/zsh
+set -e
+set -u
 
 current_version=1.0 # Please increase me whenever you changed something
 author="namh"
@@ -78,8 +80,8 @@ fi
 npm list -g --depth 0 > installed_node_pkgs
 
 ### Check if react-native-cli is installed
-INSTALLED_FILE="./installed_node_pkgs"
-RN_CLI="react-native-cli"
+readonly INSTALLED_FILE="./installed_node_pkgs"
+readonly RN_CLI="react-native-cli"
 
 if ! grep -q "$RN_CLI" "$INSTALLED_FILE" ; then
 	echo "Installing React Native cli.."
@@ -96,8 +98,8 @@ fi
 ### Check if xcode cli is installed
 gem list > installed_gems
 
-INSTALLED_GEM_FILE="./installed_gems"
-COCOAPODS="cocoapods"
+readonly INSTALLED_GEM_FILE="./installed_gems"
+readonly COCOAPODS="cocoapods"
 
 if ! grep -q "$COCOAPODS" "$INSTALLED_GEM_FILE" ; then
 	echo "Installing Cocoapods.."
@@ -105,8 +107,8 @@ if ! grep -q "$COCOAPODS" "$INSTALLED_GEM_FILE" ; then
 fi
 
 ### export env variable to zshrc
-ZSH_FILE="$HOME/.zshrc"
-TOKEN="# THIS IS AN AUTOMATED_TOKEN"
+readonly ZSH_FILE="$HOME/.zshrc"
+readonly TOKEN="# THIS IS AN AUTOMATED_TOKEN"
 
 if [[ ! -e "$ZSH_FILE" ]]; then
   touch "$ZSH_FILE"
