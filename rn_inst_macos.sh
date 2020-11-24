@@ -13,8 +13,8 @@ echo "============================================================"
 
 install_home_brew()
 {
-	echo "INSTALLING HOMEBREW"
-	/bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install.sh)"
+  echo "INSTALLING HOMEBREW"
+  /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install.sh)"
 }
 
 install_node()
@@ -46,6 +46,12 @@ install_xcode_cli()
 {
 	echo "INSTALLING Xcode CLI"
 	xcode-select -install
+}
+
+install_visual_code()
+{
+  echo "INSTALLING visual code"
+  brew cask install visual-studio-code
 }
 
 ### Check if already have brew or not
