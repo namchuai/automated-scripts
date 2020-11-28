@@ -1,6 +1,6 @@
 #!/bin/zsh
 
-current_version=1.2 # Please increase me whenever you changed something
+current_version=1.3 # Please increase me whenever you changed something
 author="namh"
 
 echo "============================================================"
@@ -13,9 +13,7 @@ echo ""
 echo "============================================================"
 
 # CHANGE_LOG
-# - Will not stop even error output
-# - Adding git config
-# - Installing java
+# - Add more packages to install (Chrome, Android Studio, Slack, Whatsapp)
 
 install_home_brew()
 {
@@ -155,6 +153,54 @@ if [ "$should_configure_git" = "y" ] ; then
 
   git config --global user.name "$git_name"
   git config --global user.email "$git_email"
+
+  ssh-keygen
+
+  echo "Your public key is:"
+  cat ~/.ssh/id_rsa.pub
+fi
+
+install_google_chrome() {
+  # Installing Google Chrome (optional)
+  echo "============================="
+  echo -n "Do you want to install Google Chrome? [y/n]"
+  read should_install_chrome
+
+  if [ "$should_install_chrome" = "y" ] ; then
+    brew install --cask google-chrome
+  fi
+}
+
+install_android_studio() {
+  # Installing Android studio (optional)
+  echo "============================="
+  echo -n "Do you want to install Android studio? [y/n]"
+  read should_install
+
+  if [ "$should_install" = "y" ] ; then
+    brew install --cask android-studio
+  fi
+}
+
+GOOGLE_CHROME_KEY="google-chrome"
+ANDROID_STUDIO_KEY="android-studio"
+SLACK_KEY="slack"
+WHATSAPP_KEY="whatsapp"
+
+if ! grep -q "$GOOGLE_CHROME_KEY" "$INSTALLED_BREW_CASK_PKG_FILE"; then
+  install_google_chrome
+fi
+
+if ! grep -q "$ANDROID_STUDIO_KEY" "$INSTALLED_BREW_CASK_PKG_FILE"; then
+  install_android_studio
+fi
+
+if ! grep -q "$SLACK_KEY" "$INSTALLED_BREW_CASK_PKG_FILE"; then
+  brew install --cask slack
+fi
+
+if ! grep -q "$WHATSAPP_KEY" "$INSTALLED_BREW_CASK_PKG_FILE"; then
+  brew install --cask whatsapp
 fi
 
 echo "Success! Please restart your terminal!"
