@@ -1,6 +1,6 @@
 #!/bin/zsh
 
-current_version=1.3 # Please increase me whenever you changed something
+current_version=1.3.1 # Please increase me whenever you changed something
 author="namh"
 
 echo "============================================================"
@@ -13,7 +13,7 @@ echo ""
 echo "============================================================"
 
 # CHANGE_LOG
-# - Add more packages to install (Chrome, Android Studio, Slack, Whatsapp)
+# - Install oh-my-zsh
 
 install_home_brew()
 {
@@ -201,6 +201,11 @@ fi
 
 if ! grep -q "$WHATSAPP_KEY" "$INSTALLED_BREW_CASK_PKG_FILE"; then
   brew install --cask whatsapp
+fi
+
+OH_MY_ZSH_DIR="$HOME/.oh-my-zsh"
+if [ ! -d "$OH_MY_ZSH_DIR" ]; then
+  sh -c "$(curl -fsSL https://raw.github.com/ohmyzsh/ohmyzsh/master/tools/install.sh)"
 fi
 
 echo "Success! Please restart your terminal!"

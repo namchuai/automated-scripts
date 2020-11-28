@@ -1,4 +1,5 @@
 installed_gems
+installed_brew_cask_pkgs
 installed_node_pkgs
 installed_brew_pkgs
 log.txt
