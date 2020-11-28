@@ -1,25 +1,29 @@
-#!/bin/bash
-set -e
-set -u
+#!/bin/zsh
 
-current_version=1.1 # Please increase me whenever you changed something
+current_version=1.2 # Please increase me whenever you changed something
 author="namh"
 
 echo "============================================================"
 echo "AUTOMATED REACT NATIVE INSTALLATION ON MACOS"
 echo "VERSION: $current_version"
 echo "AUTHOR: $author"
+echo ""
+echo "THIS SCRIPT ONLY WORKS ON LATEST MACOS VERSION"
+echo ""
 echo "============================================================"
+
+# CHANGE_LOG
+# - Will not stop even error output
+# - Adding git config
+# - Installing java
 
 install_home_brew()
 {
-  echo "INSTALLING HOMEBREW"
   /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install.sh)"
 }
 
 install_jre_jdk()
 {
-  echo "INSTALLING JRE, JDK 8"
   brew tap AdoptOpenJDK/openjdk
   brew cask install adoptopenjdk8
 }
@@ -60,10 +64,19 @@ if ! grep -q "$YARN_KEY" "$INSTALLED_BREW_PKG_FILE" ; then
 fi
 
 ### Check for java
-which -s java
-if [[ $? != 0 ]]; then
+readonly INSTALLED_BREW_CASK_PKG_FILE="installed_brew_cask_pkgs"
+readonly JAVA_KEY="adoptopenjdk8"
+brew list --cask > "$INSTALLED_BREW_CASK_PKG_FILE"
+
+if ! grep -q "$JAVA_KEY" "$INSTALLED_BREW_CASK_PKG_FILE"; then
   echo "INSTALLING OpenJDK 8.."
   install_jre_jdk
+fi
+
+### Check for visual code
+readonly VS_CODE="visual-studio-code"
+if ! grep -q "$VS_CODE" "$INSTALLED_BREW_CASK_PKG_FILE"; then
+  install_visual_code
 fi
 
 ### Check if node is installed
@@ -128,6 +141,20 @@ if ! grep -q "$TOKEN" "$ZSH_FILE" ; then
   echo "export PATH=$PATH:$ANDROID_HOME_PATH/tools" >> "$ZSH_FILE"
   echo "export PATH=$PATH:$ANDROID_HOME_PATH/tools/bin" >> "$ZSH_FILE"
   echo "export PATH=$PATH:$ANDROID_HOME_PATH/platform-tools" >> "$ZSH_FILE"
+fi
+
+# Setting the git
+echo "============================="
+echo -n "Do you want to configure Git now? [y/n]"
+read should_configure_git
+if [ "$should_configure_git" = "y" ] ; then
+  echo -n "Enter your Git name > "
+  read git_name
+  echo -n "Enter your Git email > "
+  read git_email
+
+  git config --global user.name "$git_name"
+  git config --global user.email "$git_email"
 fi
 
 echo "Success! Please restart your terminal!"
