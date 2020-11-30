@@ -186,6 +186,7 @@ GOOGLE_CHROME_KEY="google-chrome"
 ANDROID_STUDIO_KEY="android-studio"
 SLACK_KEY="slack"
 WHATSAPP_KEY="whatsapp"
+RN_DBG="react-native-debugger"
 
 if ! grep -q "$GOOGLE_CHROME_KEY" "$INSTALLED_BREW_CASK_PKG_FILE"; then
   install_google_chrome
@@ -201,6 +202,10 @@ fi
 
 if ! grep -q "$WHATSAPP_KEY" "$INSTALLED_BREW_CASK_PKG_FILE"; then
   brew install --cask whatsapp
+fi
+
+if ! grep -q "$RN_DBG" "$INSTALLED_BREW_CASK_PKG_FILE"; then
+  brew install --cask "$RN_DBG"
 fi
 
 OH_MY_ZSH_DIR="$HOME/.oh-my-zsh"
