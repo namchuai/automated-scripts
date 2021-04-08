@@ -23,7 +23,7 @@ install_home_brew()
 install_jre_jdk()
 {
   brew tap AdoptOpenJDK/openjdk
-  brew cask install adoptopenjdk8
+  brew install --cask adoptopenjdk8
 }
 
 install_react_native()
@@ -41,7 +41,7 @@ install_xcode_cli()
 install_visual_code()
 {
   echo "INSTALLING visual code"
-  brew cask install visual-studio-code
+  brew install --cask visual-studio-code
 }
 
 ### Check if already have brew or not
